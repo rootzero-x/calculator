@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    touch-action: manipulation;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    /* Prevent scrolling like a native app */
+    background-color: #000;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Custom utility for safe area text resizing if needed */
+.text-dynamic {
+    container-type: inline-size;
+}
+
+.container-type-inline-size {
+    container-type: inline-size;
+}

@@ -1,0 +1,279 @@
+:root {
+    --bg-color: #0f172a;
+    --calc-bg: rgba(255, 255, 255, 0.05);
+    --screen-bg: rgba(0, 0, 0, 0.2);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --btn-bg: rgba(255, 255, 255, 0.05);
+    --btn-hover: rgba(255, 255, 255, 0.1);
+    --btn-operator: #f59e0b; /* Amber */
+    --btn-operator-hover: #d97706;
+    --btn-action: #64748b; /* Slate */
+    --btn-action-hover: #475569;
+    --btn-equals: #3b82f6; /* Blue */
+    --btn-equals-hover: #2563eb;
+    --glow-color: rgba(59, 130, 246, 0.5);
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+    margin: 0;
+    padding: 0;
+    user-select: none; /* Prevent text selection on rapid clicks */
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; /* No scrollbars */
+    position: relative;
+}
+
+/* Background Animation */
+.background-globes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.globe {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: float 20s infinite ease-in-out alternate;
+}
+
+.globe-1 {
+    width: 400px;
+    height: 400px;
+    background: #4f46e5;
+    top: -10%;
+    left: -10%;
+}
+
+.globe-2 {
+    width: 300px;
+    height: 300px;
+    background: #ec4899;
+    bottom: -10%;
+    right: -5%;
+    animation-delay: -5s;
+}
+
+.globe-3 {
+    width: 250px;
+    height: 250px;
+    background: #06b6d4;
+    top: 40%;
+    left: 40%;
+    animation-delay: -10s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, 50px) scale(1.1); }
+}
+
+/* Calculator Container */
+.calculator-container {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Screen Section */
+.calculator-screen {
+    background: var(--screen-bg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    word-wrap: break-word;
+    word-break: break-all;
+    min-height: 120px;
+}
+
+.previous-operand {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    min-height: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.current-operand {
+    color: var(--text-primary);
+    font-size: 3rem; 
+    font-weight: 500;
+    line-height: 1;
+}
+
+/* Grid Layout */
+.calculator-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* grid-template-rows: repeat(5, 1fr); */ 
+    /* Let rows size automatically or specifically */
+    flex-grow: 1; 
+}
+
+/* Buttons */
+button {
+    cursor: pointer;
+    font-size: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    outline: none;
+    background: var(--btn-bg);
+    color: var(--text-primary);
+    padding: 1.5rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.4);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+button:active::after {
+    animation: ripple 0.4s ease-out;
+}
+
+@keyframes ripple {
+    0% { transform: scale(0, 0); opacity: 0.5; }
+    100% { transform: scale(40, 40); opacity: 0; }
+}
+
+button:hover {
+    background: var(--btn-hover);
+    z-index: 10;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+.span-two {
+    grid-column: span 2;
+}
+
+/* Special Button Colors */
+.btn-operator {
+    color: var(--btn-operator);
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.btn-operator:hover {
+    background: rgba(245, 158, 11, 0.1);
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+.btn-action {
+    color: #ef4444; /* Red for AC/DEL */
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.btn-action:hover {
+    background: rgba(239, 68, 68, 0.1);
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
+.btn-equals {
+    background: var(--btn-equals);
+    color: white;
+    border: none;
+}
+
+.btn-equals:hover {
+    background: var(--btn-equals-hover);
+    box-shadow: 0 0 20px var(--glow-color);
+}
+
+/* --- Responsive Design --- */
+
+/* 1. Desktop (Default large screens) */
+@media (min-width: 1025px) {
+    .calculator-container {
+        width: 400px;
+        /* height: auto;  Fit content */
+    }
+    button {
+        height: 80px;
+        font-size: 1.5rem;
+    }
+}
+
+/* 2. Tablet / Small Laptops */
+@media (min-width: 600px) and (max-width: 1024px) {
+    .calculator-container {
+        width: 60%;
+        max-width: 500px;
+    }
+    .current-operand {
+        font-size: 3.5rem;
+    }
+    button {
+        height: 90px;
+        font-size: 1.7rem;
+    }
+}
+
+/* 3. Mobile */
+@media (max-width: 599px) {
+    body {
+        align-items: flex-end; /* Align to bottom like native apps */
+    }
+    
+    .calculator-container {
+        width: 100%;
+        height: 100vh; /* Full screen */
+        border-radius: 0; /* Remove rounded corners */
+        border: none;
+        background: rgba(15, 23, 42, 0.85); /* Slightly more opaque */
+    }
+
+    .calculator-screen {
+        flex-grow: 1; /* Push grid to bottom */
+        padding-top: 4rem;
+        justify-content: flex-end;
+    }
+
+    .current-operand {
+        font-size: 4rem;
+    }
+
+    .calculator-grid {
+        flex-grow: 0;
+        /* Make buttons taller/easier to hit */
+        grid-template-rows: repeat(5, minmax(80px, 1fr)); 
+    }
+    
+    button {
+        border: 1px solid rgba(255,255,255,0.03); 
+        /* Ensure distinct separation */
+    }
+}
