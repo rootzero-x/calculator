@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Display from './Display';
 import CalcButton from './CalcButton';
 import { useCalculator } from '../hooks/useCalculator';
@@ -133,8 +134,6 @@ const Calculator = () => {
                 <CalcButton label="=" type="accent" onClick={handleEquals} />
             </div>
 
-            {/* Safe area spacer for mobile */}
-            <div className="h-6 md:hidden"></div>
         </div>
     );
 };
